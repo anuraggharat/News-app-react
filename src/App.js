@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import Card from './Components/Card';
 import {useEffect, useState} from 'react'
@@ -17,24 +16,25 @@ const categories = [
 ];
 
 
+
 function App() {
+  const [data, setData] = useState(null);
+  const [selected, setSelected] = useState("all");
 
-  const[data,setData]=useState(null)
-  const [selected, setSelected] = useState("breaking-news");
-
-  const fetchHeadlines=async()=>{
-    const res = await fetch(
-      `https://gnews.io/api/v4/top-headlines?&topic=${selected}&lang=en&country=in&token=d591b0cad31fe5d15357f937fce46c89`
-    );
-    const response =await res.json();
-    setData(response.articles)
-  }
-
- 
-  useEffect(()=>{
-    fetchHeadlines()
-  },[selected])
-
+  useEffect(() => {
+     const fetchHeadlines = async () => {
+       try {
+         const res = await fetch(
+           `https://gnews.io/api/v4/top-headlines?&topic=${selected}&lang=en&country=in&token=d591b0cad31fe5d15357f937fce46c89`
+         );
+         const response = await res.json();
+         setData(response.articles);
+       } catch (error) {
+         alert(error);
+       }
+     };
+    fetchHeadlines();
+  }, [selected]);
 
   return (
     <div className=" w-100 min-vh-100 bg-light">
@@ -46,12 +46,12 @@ function App() {
           {categories.map((item, index) => (
             <button
               className={
-                selected == item
+                selected === item
                   ? "btn btn-primary me-2 mb-2"
                   : "btn btn-outline-primary me-2 mb-2"
               }
               key={index}
-              onClick={()=>setSelected(item)}
+              onClick={() => setSelected(item)}
             >
               {item}
             </button>
