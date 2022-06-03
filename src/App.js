@@ -42,7 +42,7 @@ function App() {
   return (
     <div className=" w-100 min-vh-100 bg-light">
       <div className="container text-center pt-3 pb-3">
-        <h1>News Bits</h1>
+        <h1>Quick News</h1>
         <p>News in shorts</p>
       </div>
       <div className="container">
@@ -73,7 +73,6 @@ function App() {
                 <select
                   className="form-select"
                   defaultValue={language}
-                  value={language}
                   onChange={(e) => setLanguage(e.target.value)}
                 >
                   <option value="en">English</option>
@@ -99,7 +98,6 @@ function App() {
                 <select
                   className="form-select"
                   defaultValue={country}
-                  value={country}
                   onChange={(e) => setCountry(e.target.value)}
                 >
                   <option value="au">Australia</option>
