@@ -20,12 +20,39 @@ const categories = [
 function App() {
   const [data, setData] = useState(null);
   const [selected, setSelected] = useState("breaking-news");
+  
+  //stores the language
   const [language,setLanguage] = useState("en")
+  //country 
   const [country,setCountry] = useState("in")
 
+  const [search,setSearch] = useState('')
+
+  const handleChange =(e)=>{
+    setSearch(e.target.value)
+  }
+
+
+  const searchNews=async()=>{
+    setData(null)
+    try {
+      const res = await fetch(
+        `https://gnews.io/api/v4/search?q=${search}&token=d591b0cad31fe5d15357f937fce46c89`
+      );
+      const response = await res.json();
+      setData(response.articles);
+    } catch (error) {
+      console.log(error)
+    }
+    setSearch("")
+  }
+
+
+  
 
   useEffect(() => {
      const fetchHeadlines = async () => {
+      setData(null)
        try {
          const res = await fetch(
            `https://gnews.io/api/v4/top-headlines?&topic=${selected}&lang=${language}&country=${country}&token=d591b0cad31fe5d15357f937fce46c89`
@@ -40,7 +67,7 @@ function App() {
   }, [selected,language,country]);
 
   return (
-    <div className=" w-100 min-vh-100 bg-light">
+    <div className=" w-100 min-vh-100 bg-white">
       <div className="container text-center pt-3 pb-3">
         <h1>Quick News</h1>
         <p>News in shorts</p>
@@ -116,9 +143,32 @@ function App() {
               </div>
             </div>
           </div>
+          <div className="col-lg-4">
+            <div className="row mb-3">
+              <div className="input-group">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search News"
+                  aria-label="Search News"
+                  aria-describedby="button-addon2"
+                  value={search}
+                  onChange={(e) => handleChange(e)}
+                />
+                <button
+                  className="btn btn-primary"
+                  type="button"
+                  id="button-addon2"
+                  onClick={()=>searchNews()}
+                >
+                  <i className="bi bi-search"></i>
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      
+
       {data == null ? (
         <Loader />
       ) : (

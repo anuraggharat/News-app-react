@@ -1,8 +1,11 @@
 import React from 'react'
 
+
 export default function Card({item}){
+
+  
     return (
-      <div className="card mb-3 bg-white border-0 shadow-sm">
+      <div className="card mb-3 border-0 shadow-sm">
         <div className="row g-0">
           <div className="col-md-4">
             <img
@@ -17,7 +20,10 @@ export default function Card({item}){
               <p className="card-text">{item.description}</p>
               <div className="d-flex justify-content-between">
                 <p className="card-text">
-                  <small className="text-muted">{item.publishedAt}</small>
+                  
+                  <small className="text-muted">
+                    {new Date(item.publishedAt).toDateString()}
+                  </small>
                 </p>
                 <p>{item.source.name}</p>
               </div>
