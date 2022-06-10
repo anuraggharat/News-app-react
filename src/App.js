@@ -37,7 +37,7 @@ function App() {
     setData(null)
     try {
       const res = await fetch(
-        `https://gnews.io/api/v4/search?q=${search}&token=d591b0cad31fe5d15357f937fce46c89`
+        `https://gnews.io/api/v4/search?q=${search}&token=${process.env.REACT_APP_KEY}`
       );
       const response = await res.json();
       setData(response.articles);
@@ -55,7 +55,7 @@ function App() {
       setData(null)
        try {
          const res = await fetch(
-           `https://gnews.io/api/v4/top-headlines?&topic=${selected}&lang=${language}&country=${country}&token=d591b0cad31fe5d15357f937fce46c89`
+           `https://gnews.io/api/v4/top-headlines?&topic=${selected}&lang=${language}&country=${country}&token=${process.env.REACT_APP_KEY}`
          );
          const response = await res.json();
          setData(response.articles);
